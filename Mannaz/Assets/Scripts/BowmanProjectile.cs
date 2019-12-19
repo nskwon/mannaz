@@ -192,7 +192,7 @@ public class BowmanProjectile : MonoBehaviour
     private void Update()
     {
         
-        if ( shooting <= 75 )
+        if ( shooting <= 35 )
         {
             transform.Translate(0, 0, Time.deltaTime * 10, Space.World);
             transform.Rotate(0, 10, 0);

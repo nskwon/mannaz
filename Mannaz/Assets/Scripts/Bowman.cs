@@ -31,7 +31,7 @@ public class Bowman : MonoBehaviour
                 transform.position += transform.forward * Time.deltaTime * speed;
                 attackDelay++;
 
-                if (attackDelay >= 80)
+                if (attackDelay >= 40)
                 {
                     
                     attacking = true;

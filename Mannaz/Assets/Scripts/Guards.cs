@@ -31,7 +31,7 @@ public class Guards : MonoBehaviour
                 transform.position += transform.forward * Time.deltaTime * speed;
                 attackDelay++;
 
-                if (attackDelay >= 50)
+                if (attackDelay >= 30)
                 {
                     attacking = true;
                     attackDelay = 0;
@@ -44,19 +44,19 @@ public class Guards : MonoBehaviour
             else
             {
                 // attacking "animation"
-                if (pullback < 20)
+                if (pullback < 10)
                 {
                     transform.position -= transform.forward * Time.deltaTime;
                     pullback++;
                 }
-                else if (forward < 10)
+                else if (forward < 3)
                 {
                     transform.position += transform.forward * Time.deltaTime * 30;
                     forward++;
                 }
-                else if (backward < 20)
+                else if (backward < 6)
                 {
-                    transform.position -= transform.forward * Time.deltaTime * 14;
+                    transform.position -= transform.forward * Time.deltaTime * 13;
                     backward++;
                 }
                 else
