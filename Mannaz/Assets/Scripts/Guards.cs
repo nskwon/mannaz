@@ -35,6 +35,7 @@ public class Guards : MonoBehaviour
                 {
                     attacking = true;
                     attackDelay = 0;
+                    yield return new WaitForSeconds(0.5f);
                 }
 
             }
