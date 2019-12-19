@@ -14440,7 +14440,6 @@ MonoBehaviour:
   attackRate: 1.5
   attackRange: 16
   spawnRate: 6
-  attackDelay: 0
   shooting: 0
   attacking: 0
   enemyTag: Enemy
@@ -17546,7 +17545,7 @@ PrefabInstance:
     - target: {fileID: 7514861619760733567, guid: f41371f642ec15a4c898fb0c965127d8,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.2
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7514861619760733567, guid: f41371f642ec15a4c898fb0c965127d8,
         type: 3}
@@ -17630,7 +17629,7 @@ PrefabInstance:
     - target: {fileID: 9112471771412895669, guid: 35fc5df3b6f2fab419fc6d85438295b6,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.2
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9112471771412895669, guid: 35fc5df3b6f2fab419fc6d85438295b6,
         type: 3}
@@ -17648,5 +17647,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1980226565224531992, guid: 4aa57167b70a0354eb7b474b164e9291,
         type: 3}
+    - target: {fileID: 7662974065175768531, guid: 35fc5df3b6f2fab419fc6d85438295b6,
+        type: 3}
+      propertyPath: attackRange
+      value: 10.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7662974065175768531, guid: 35fc5df3b6f2fab419fc6d85438295b6,
+        type: 3}
+      propertyPath: attacking
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35fc5df3b6f2fab419fc6d85438295b6, type: 3}

@@ -105,3 +105,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 762312a8ded99644494e6e54320e79ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shooting: 0
+  initialShift: 0
+  leftShift: 0
+  rightShift: 0
+  WizardImpactEffect: {fileID: 8610624790338973900, guid: 6c787a6ed9041af448eb6051fe6a9e59,
+    type: 3}

@@ -10,17 +10,18 @@ public class Bowman : MonoBehaviour
     public float attackRate = 1.5f;
     public float attackRange = 16.0f;
     public float spawnRate = 6f;
-    public int attackDelay = 0;
     public int shooting = 0;
     public bool attacking = false;
 
     private Transform target;
     public string enemyTag = "Enemy";
+    Quaternion initialRot;
 
     public BowmanProjectile arrow;
 
     void Start()
     {
+        initialRot = transform.rotation;
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
         StartCoroutine(CoUpdate());
     }
@@ -45,6 +46,9 @@ public class Bowman : MonoBehaviour
         if ( nearestEnemy != null && shortestDistance <= attackRange )
         {
             target = nearestEnemy.transform;
+        } else
+        {
+            target = null;
         }
 
     }
@@ -54,6 +58,8 @@ public class Bowman : MonoBehaviour
 
         if ( target == null )
         {
+            transform.rotation = initialRot;
+            attacking = false;
             return;
         }
 
@@ -76,7 +82,6 @@ public class Bowman : MonoBehaviour
             else
             {
                 attacking = true;
-                target = null;
             }
 
             if (health <= 0)

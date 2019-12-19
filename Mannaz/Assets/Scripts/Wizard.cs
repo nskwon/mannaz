@@ -8,17 +8,66 @@ public class Wizard : MonoBehaviour
     public float speed = 4f;
     public int damage = 10;
     public float attackRate = 0.8f;
-    public float attackRange = 2f;
+    public float attackRange = 10.5f;
     public float spawnRate = 6f;
-    public int attackDelay = 0;
     public int shooting = 0;
-    public bool attacking = true;
+    public bool attacking = false;
+
+    private Transform target;
+    public string enemyTag = "Enemy";
+    Quaternion initialRot;
 
     public WizardProjectile fireball;
 
     void Start()
     {
+        initialRot = transform.rotation;
+        InvokeRepeating("UpdateTarget", 0f, 0.5f);
         StartCoroutine(CoUpdate());
+    }
+
+    void UpdateTarget()
+    {
+
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
+        float shortestDistance = Mathf.Infinity;
+        GameObject nearestEnemy = null;
+
+        foreach (GameObject enemy in enemies)
+        {
+            float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+            if (distanceToEnemy < shortestDistance)
+            {
+                shortestDistance = distanceToEnemy;
+                nearestEnemy = enemy;
+            }
+        }
+
+        if (nearestEnemy != null && shortestDistance <= attackRange)
+        {
+            target = nearestEnemy.transform;
+        } else
+        {
+            target = null;
+        }
+
+    }
+
+    void Update()
+    {
+
+        if (target == null)
+        {
+            transform.rotation = initialRot;
+            attacking = false;
+            return;
+        }
+
+        Vector3 dir = target.position - transform.position;
+        Quaternion lookRotation = Quaternion.LookRotation(dir);
+        Vector3 rotation = lookRotation.eulerAngles;
+        transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+
     }
 
     IEnumerator CoUpdate()
@@ -26,7 +75,16 @@ public class Wizard : MonoBehaviour
         while (true)
         {
 
-            if ( health <= 0 )
+            if (target == null)
+            {
+                yield return null;
+            }
+            else
+            {
+                attacking = true;
+            }
+
+            if (health <= 0)
             {
                 Destroy(gameObject);
                 yield return null;
@@ -36,16 +94,6 @@ public class Wizard : MonoBehaviour
             if (!attacking)
             {
                 transform.position += transform.forward * Time.deltaTime * speed;
-                attackDelay++;
-
-                if (attackDelay >= 40)
-                {
-
-                    attacking = true;
-                    attackDelay = 0;
-
-                }
-
             }
 
             // initiate attack
@@ -59,9 +107,13 @@ public class Wizard : MonoBehaviour
                 Quaternion rotation = transform.rotation;
 
                 // spawn new ball
-                WizardProjectile newArrow = Instantiate(fireball, position, rotation) as WizardProjectile;
+                WizardProjectile newFireball = Instantiate(fireball, position, rotation) as WizardProjectile;
+                if ( newFireball != null )
+                {
+                    newFireball.Seek(target);
+                }
                 yield return new WaitForSeconds(3f);
-                attacking = false;
+                //attacking = false;
 
             }
 
@@ -69,6 +121,12 @@ public class Wizard : MonoBehaviour
 
         }
 
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 
 }
