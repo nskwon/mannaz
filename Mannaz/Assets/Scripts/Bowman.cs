@@ -8,23 +8,66 @@ public class Bowman : MonoBehaviour
     public float speed = 4f;
     public int damage = 10;
     public float attackRate = 1.5f;
-    public float attackRange = 1f;
+    public float attackRange = 16.0f;
     public float spawnRate = 6f;
     public int attackDelay = 0;
     public int shooting = 0;
-    public bool attacking = true;
+    public bool attacking = false;
+
+    public Transform target;
+    public string enemyTag = "Enemy";
 
     public BowmanProjectile arrow;
 
     void Start()
     {
+        InvokeRepeating("UpdateTarget", 0f, 0.5f);
         StartCoroutine(CoUpdate());
+    }
+
+    void UpdateTarget()
+    {
+
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
+        float shortestDistance = Mathf.Infinity;
+        GameObject nearestEnemy = null;
+
+        foreach ( GameObject enemy in enemies )
+        {
+            float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+            if ( distanceToEnemy < shortestDistance )
+            {
+                shortestDistance = distanceToEnemy;
+                nearestEnemy = enemy;
+            }
+        }
+
+        if ( nearestEnemy != null && shortestDistance <= attackRange )
+        {
+            target = nearestEnemy.transform;
+        }
+
+    }
+
+    void Update()
+    {
+        
     }
 
     IEnumerator CoUpdate()
     {
         while (true)
         {
+
+            if (target == null)
+            {
+                yield return null;
+            }
+            else
+            {
+                attacking = true;
+                target = null;
+            }
 
             if (health <= 0)
             {
@@ -36,16 +79,6 @@ public class Bowman : MonoBehaviour
             if (!attacking)
             {
                 transform.position += transform.forward * Time.deltaTime * speed;
-                attackDelay++;
-
-                if (attackDelay >= 40)
-                {
-                    
-                    attacking = true;
-                    attackDelay = 0;
-
-                }
-
             }
 
             // initiate attack
@@ -60,6 +93,10 @@ public class Bowman : MonoBehaviour
 
                 // spawn new arrow
                 BowmanProjectile newArrow = Instantiate(arrow, position, rotation) as BowmanProjectile;
+                if ( newArrow != null )
+                {
+                    newArrow.Seek(target);
+                }
                 yield return new WaitForSeconds(3f);
                 attacking = false;
                 
@@ -69,6 +106,12 @@ public class Bowman : MonoBehaviour
 
         }
 
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 
 }

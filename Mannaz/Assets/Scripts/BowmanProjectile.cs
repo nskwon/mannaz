@@ -5,13 +5,19 @@ using UnityEngine;
 public class BowmanProjectile : MonoBehaviour
 {
 
-    public Vector3 vertLeftTopFront = new Vector3(-1,1,1);
+    public Vector3 vertLeftTopFront = new Vector3(-1, 1, 1);
     public Vector3 vertRightTopFront = new Vector3(1, 1, 1);
     public Vector3 vertRightTopBack = new Vector3(1, 1, -1);
     public Vector3 vertLeftTopBack = new Vector3(-1, 1, -1);
 
+    private Transform target;
+    public GameObject BowmanImpactEffect;
     public int shooting = 0;
 
+    public void Seek (Transform _target)
+    {
+        target = _target;
+    }
     void Start()
     {
         transform.Rotate(0, 270, 270);
@@ -192,17 +198,31 @@ public class BowmanProjectile : MonoBehaviour
     private void Update()
     {
         
-        if ( shooting <= 35 )
-        {
-            transform.Translate(0, 0, Time.deltaTime * 10, Space.World);
-            transform.Rotate(0, 10, 0);
-            shooting++;
-        } else
+        if ( target == null )
         {
             Destroy(gameObject);
             return;
         }
 
+        Vector3 dir = target.position - transform.position;
+        float distanceThisFrame = Time.deltaTime * 10;
+
+        if ( dir.magnitude <= distanceThisFrame ) {
+            HitTarget();
+            return;
+        }
+
+        transform.Translate(dir.normalized * distanceThisFrame, Space.World);
+        transform.Rotate(0, 10, 0);
+
+    }
+
+    void HitTarget()
+    {
+        GameObject effectIns = (GameObject)Instantiate(BowmanImpactEffect, transform.position, transform.rotation);
+        Destroy(effectIns, 2f);
+        Destroy(gameObject);
+        return;
     }
 
 }
