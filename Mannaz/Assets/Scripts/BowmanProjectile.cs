@@ -194,9 +194,6 @@ public class BowmanProjectile : MonoBehaviour
         
         if ( shooting <= 75 )
         {
-            //transform.position += transform.forward * Time.deltaTime * 10;
-            //var move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            //transform.position += move * 10 * Time.deltaTime;
             transform.Translate(0, 0, Time.deltaTime * 10, Space.World);
             transform.Rotate(0, 10, 0);
             shooting++;
@@ -205,8 +202,6 @@ public class BowmanProjectile : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
-
 
     }
 
