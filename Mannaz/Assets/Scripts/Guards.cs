@@ -43,24 +43,24 @@ public class Guards : MonoBehaviour
             else
             {
                 // attacking "animation"
-                if (pullback < 10)
+                if (pullback < 20)
                 {
                     transform.position -= transform.forward * Time.deltaTime;
                     pullback++;
                 }
-                else if (forward < 2)
+                else if (forward < 10)
                 {
                     transform.position += transform.forward * Time.deltaTime * 30;
                     forward++;
                 }
-                else if (backward < 5)
+                else if (backward < 20)
                 {
-                    transform.position -= transform.forward * Time.deltaTime * 10;
+                    transform.position -= transform.forward * Time.deltaTime * 14;
                     backward++;
                 }
                 else
                 {
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(1f);
                     attacking = false;
                     pullback = 0;
                     forward = 0;
