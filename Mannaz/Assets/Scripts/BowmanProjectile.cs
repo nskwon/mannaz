@@ -10,6 +10,7 @@ public class BowmanProjectile : MonoBehaviour
     public Vector3 vertRightTopBack = new Vector3(1, 1, -1);
     public Vector3 vertLeftTopBack = new Vector3(-1, 1, -1);
 
+    public int shooting = 0;
 
     void Start()
     {
@@ -184,6 +185,23 @@ public class BowmanProjectile : MonoBehaviour
         mesh.triangles = triangles;
         mesh.uv = uvs;
         mesh.RecalculateNormals();
+
+    }
+
+    private void Update()
+    {
+        
+        if ( shooting <= 75 )
+        {
+            transform.position += transform.forward * Time.deltaTime * 10;
+            shooting++;
+        } else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+
 
     }
 

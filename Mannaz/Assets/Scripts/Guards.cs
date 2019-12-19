@@ -7,8 +7,8 @@ public class Guards : MonoBehaviour
     public int health = 100;
     public float speed = 4f;
     public int damage = 15;
-    public float rate = 1f;
-    public float range = 1f;
+    public float attackRate = 1f;
+    public float attackRange = 1f;
     public float spawnRate = 4f;
     public int attackDelay = 0;
     public int pullback = 0;
