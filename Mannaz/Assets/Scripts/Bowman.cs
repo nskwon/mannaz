@@ -14,7 +14,7 @@ public class Bowman : MonoBehaviour
     public int shooting = 0;
     public bool attacking = false;
 
-    public Transform target;
+    private Transform target;
     public string enemyTag = "Enemy";
 
     public BowmanProjectile arrow;
@@ -51,7 +51,17 @@ public class Bowman : MonoBehaviour
 
     void Update()
     {
-        
+
+        if ( target == null )
+        {
+            return;
+        }
+
+        Vector3 dir = target.position - transform.position;
+        Quaternion lookRotation = Quaternion.LookRotation(dir);
+        Vector3 rotation = lookRotation.eulerAngles;
+        transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+
     }
 
     IEnumerator CoUpdate()

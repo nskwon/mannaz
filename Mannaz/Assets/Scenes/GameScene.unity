@@ -14443,7 +14443,6 @@ MonoBehaviour:
   attackDelay: 0
   shooting: 0
   attacking: 0
-  target: {fileID: 0}
   enemyTag: Enemy
   arrow: {fileID: 2976716219154395936, guid: bc30bf553cfc549428729aae820ec511, type: 3}
 --- !u!1 &1857798528
@@ -17413,7 +17412,7 @@ PrefabInstance:
     - target: {fileID: 8661980687293033093, guid: 298e8ab7e2559ba43baaeb84a64a5f59,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 35.04
+      value: 35.37
       objectReference: {fileID: 0}
     - target: {fileID: 8661980687293033093, guid: 298e8ab7e2559ba43baaeb84a64a5f59,
         type: 3}
@@ -17423,7 +17422,7 @@ PrefabInstance:
     - target: {fileID: 8661980687293033093, guid: 298e8ab7e2559ba43baaeb84a64a5f59,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.74
+      value: 9.76
       objectReference: {fileID: 0}
     - target: {fileID: 8661980687293033093, guid: 298e8ab7e2559ba43baaeb84a64a5f59,
         type: 3}
@@ -17464,6 +17463,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8661980687293033093, guid: 298e8ab7e2559ba43baaeb84a64a5f59,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8834080027663255598, guid: 298e8ab7e2559ba43baaeb84a64a5f59,
         type: 3}
