@@ -25,6 +25,13 @@ public class Guards : MonoBehaviour
     {
         while (true)
         {
+
+            if (health <= 0)
+            {
+                Destroy(gameObject);
+                yield return null;
+            }
+
             // check to move forward
             if (!attacking)
             {
