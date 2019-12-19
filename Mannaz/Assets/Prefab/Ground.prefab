@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2416991886023305432}
   - component: {fileID: 8225067003599699368}
   - component: {fileID: 9056261603126220791}
+  - component: {fileID: 6594736702236474349}
   m_Layer: 0
   m_Name: Ground
   m_TagString: Untagged
@@ -92,3 +93,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6594736702236474349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8281957829679682227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 613a9c6a7df4db64a9ee1f85788e81ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverColor: {r: 0.20291921, g: 0.32557878, b: 0.5660378, a: 0}
