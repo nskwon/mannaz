@@ -220,7 +220,7 @@ public class BowmanProjectile : MonoBehaviour
     void HitTarget()
     {
         GameObject effectIns = (GameObject)Instantiate(BowmanImpactEffect, transform.position, transform.rotation);
-        Destroy(effectIns, 1.5f);
+        Destroy(effectIns, 0.8f);
         Destroy(gameObject);
         return;
     }

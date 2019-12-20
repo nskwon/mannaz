@@ -65,7 +65,7 @@ public class WizardProjectile : MonoBehaviour
     void HitTarget()
     {
         GameObject effectIns = (GameObject)Instantiate(WizardImpactEffect, transform.position, transform.rotation);
-        Destroy(effectIns, 1.5f);
+        Destroy(effectIns, 2f);
         Destroy(gameObject);
         return;
     }

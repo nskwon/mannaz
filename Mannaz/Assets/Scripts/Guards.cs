@@ -8,19 +8,19 @@ public class Guards : MonoBehaviour
     public float speed = 4f;
     public int damage = 15;
     public float attackRate = 1f;
-    public float attackRange = 1f;
+    public float attackRange = 5.5f;
     public float spawnRate = 4f;
     public int attackDelay = 0;
     public int pullback = 0;
     public int forward = 0;
     public int backward = 0;
-    public bool attacking = true;
+    public bool attacking = false;
 
     private Transform target;
     public string enemyTag = "Enemy";
     Quaternion initialRot;
     Vector3 initialPos;
-    public GameObject WizardImpactEffect;
+    public GameObject GuardImpactEffect;
 
     void Start()
     {
@@ -46,13 +46,26 @@ public class Guards : MonoBehaviour
             }
         }
 
-        if (nearestEnemy != null && shortestDistance <= attackRange)
+        if (!attacking)
         {
-            target = nearestEnemy.transform;
-        }
-        else
+            if (nearestEnemy != null && shortestDistance <= attackRange)
+            {
+                target = nearestEnemy.transform;
+            }
+            else
+            {
+                target = null;
+            }
+        } else
         {
-            target = null;
+            if (nearestEnemy != null && shortestDistance <= attackRange+0.5f)
+            {
+                target = nearestEnemy.transform;
+            }
+            else
+            {
+                target = null;
+            }
         }
 
     }
@@ -67,40 +80,46 @@ public class Guards : MonoBehaviour
             return;
         }
 
-        Vector3 dir = target.position - transform.position;
-        Quaternion lookRotation = Quaternion.LookRotation(dir);
-        Vector3 rotation = lookRotation.eulerAngles;
-        transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+        if (transform.position != target.position) 
+        { 
+            Vector3 dir = target.position - transform.position;
+            Quaternion lookRotation = Quaternion.LookRotation(dir);
+            Vector3 rotation = lookRotation.eulerAngles;
+            transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+        }
 
-        if ( pullback == 0 )
+        if (pullback == 0 || !attacking)
         {
             initialPos = transform.position;
         }
 
         // attacking "animation"
-        if (pullback < 20)
+        if (pullback < 10)
         {
             transform.position -= transform.forward * Time.deltaTime;
             pullback++;
         }
-        else if (forward < 9)
+        else if (forward < 6)
         {
-            transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * 30);
+            transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * 25);
             forward++;
+            if ( transform.position == target.position )
+            {
+                forward = 6;
+            }
         }
-        else if ( forward == 9 )
+        else if ( forward == 6 )
         {
             HitTarget();
             forward++;
         }
         else if (backward < 35)
         {
-            transform.position = Vector3.MoveTowards(transform.position, initialPos, Time.deltaTime * 13);
+            transform.position = Vector3.MoveTowards(transform.position, initialPos, Time.deltaTime * 11);
             backward++;
         }
         else
         {
-
             pullback = 0;
             forward = 0;
             backward = 0;
@@ -148,8 +167,8 @@ public class Guards : MonoBehaviour
 
     void HitTarget()
     {
-        GameObject effectIns = (GameObject)Instantiate(WizardImpactEffect, transform.position, transform.rotation);
-        Destroy(effectIns, 1.5f);
+        GameObject effectIns = (GameObject)Instantiate(GuardImpactEffect, transform.position, transform.rotation);
+        Destroy(effectIns, 0.25f);
     }
 
 }
