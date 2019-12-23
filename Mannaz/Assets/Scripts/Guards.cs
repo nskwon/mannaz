@@ -6,7 +6,7 @@ public class Guards : MonoBehaviour
 
     public int health = 100;
     public float speed = 4f;
-    public int damage = 15;
+    public int damage = 0/*15*/;
     public float attackRate = 1f;
     public float attackRange = 5.5f;
     public float spawnRate = 4f;
@@ -98,8 +98,6 @@ public class Guards : MonoBehaviour
             }
             else
             {
-
-                transform.rotation = initialRot;
                 attacking = false;
                 return;
             }
@@ -180,6 +178,7 @@ public class Guards : MonoBehaviour
             // check to move forward
             if (!attacking)
             {
+                transform.rotation = initialRot;
                 transform.position += transform.forward * Time.deltaTime * speed;
             }
 

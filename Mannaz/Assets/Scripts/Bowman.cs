@@ -17,6 +17,7 @@ public class Bowman : MonoBehaviour
     Quaternion initialRot;
 
     public BowmanProjectile arrow;
+    public GameObject deathEffect;
 
     void Start()
     {
@@ -57,6 +58,8 @@ public class Bowman : MonoBehaviour
 
         if ( health <= 0 )
         {
+            GameObject effect = (GameObject)Instantiate(deathEffect, transform.position, Quaternion.identity);
+            Destroy(effect, 3.5f);
             Destroy(gameObject);
             return;
         }
