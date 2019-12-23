@@ -56,6 +56,12 @@ public class Bowman : MonoBehaviour
     void Update()
     {
 
+        if ( health <= 0 )
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         if ( target == null )
         {
             transform.rotation = initialRot;
