@@ -6,7 +6,6 @@ public class Wizard : MonoBehaviour
 
     public int health = 30;
     public float speed = 4f;
-    public int damage = 10;
     public float attackRate = 0.8f;
     public float attackRange = 10.5f;
     public float spawnRate = 6f;

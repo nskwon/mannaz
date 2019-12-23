@@ -81,54 +81,78 @@ public class Guards : MonoBehaviour
 
         if (target == null)
         {
-            transform.rotation = initialRot;
-            attacking = false;
-            return;
-        }
 
-        if (transform.position != target.position) 
-        { 
-            Vector3 dir = target.position - transform.position;
-            Quaternion lookRotation = Quaternion.LookRotation(dir);
-            Vector3 rotation = lookRotation.eulerAngles;
-            transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
-        }
-
-        if (pullback == 0 || !attacking)
-        {
-            initialPos = transform.position;
-        }
-
-        // attacking "animation"
-        if (pullback < 10)
-        {
-            transform.position -= transform.forward * Time.deltaTime;
-            pullback++;
-        }
-        else if (forward < 6)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * 25);
-            forward++;
-            if ( transform.position == target.position )
+            if (pullback >= 10 && forward > 6 && (pullback != 0 && forward != 0 && backward != 0))
             {
-                forward = 6;
+                if (backward < 35)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, initialPos, Time.deltaTime * 11);
+                    backward++;
+                }
+                else
+                {
+                    pullback = 0;
+                    forward = 0;
+                    backward = 0;
+                }
             }
-        }
-        else if ( forward == 6 )
-        {
-            HitTarget();
-            forward++;
-        }
-        else if (backward < 35)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, initialPos, Time.deltaTime * 11);
-            backward++;
+            else
+            {
+
+                transform.rotation = initialRot;
+                attacking = false;
+                return;
+            }
         }
         else
         {
-            pullback = 0;
-            forward = 0;
-            backward = 0;
+
+            if (transform.position != target.position)
+            {
+                Vector3 dir = target.position - transform.position;
+                Quaternion lookRotation = Quaternion.LookRotation(dir);
+                Vector3 rotation = lookRotation.eulerAngles;
+                transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+            }
+
+            if (pullback == 0 || !attacking)
+            {
+                initialPos = transform.position;
+            }
+
+            // attacking "animation"
+            if (pullback < 10)
+            {
+                transform.position -= transform.forward * Time.deltaTime;
+                pullback++;
+            }
+            else if (forward < 6)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * 25);
+                forward++;
+                if (transform.position == target.position)
+                {
+                    forward = 6;
+                }
+            }
+            else if (forward == 6)
+            {
+                HitTarget();
+                Damage(target);
+                forward++;
+                backward = 1;
+            }
+            else if (backward < 35)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, initialPos, Time.deltaTime * 11);
+                backward++;
+            }
+            else
+            {
+                pullback = 0;
+                forward = 0;
+                backward = 0;
+            }
         }
 
     }
@@ -169,6 +193,17 @@ public class Guards : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
+
+    void Damage(Transform enemy)
+    {
+        DummyEnemy e = enemy.GetComponent<DummyEnemy>();
+
+        if (e != null)
+        {
+            e.TakeDamage(damage);
+        }
+
     }
 
     void HitTarget()
