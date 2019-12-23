@@ -6,7 +6,6 @@ public class Bowman : MonoBehaviour
 
     public int health = 50;
     public float speed = 4f;
-    public int damage = 10;
     public float attackRate = 1.5f;
     public float attackRange = 16.0f;
     public float spawnRate = 6f;
@@ -18,6 +17,7 @@ public class Bowman : MonoBehaviour
     Quaternion initialRot;
 
     public BowmanProjectile arrow;
+    public GameObject deathEffect;
 
     void Start()
     {
@@ -55,6 +55,14 @@ public class Bowman : MonoBehaviour
 
     void Update()
     {
+
+        if ( health <= 0 )
+        {
+            GameObject effect = (GameObject)Instantiate(deathEffect, transform.position, Quaternion.identity);
+            Destroy(effect, 3.5f);
+            Destroy(gameObject);
+            return;
+        }
 
         if ( target == null )
         {

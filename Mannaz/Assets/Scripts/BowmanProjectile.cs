@@ -13,6 +13,7 @@ public class BowmanProjectile : MonoBehaviour
     private Transform target;
     public GameObject BowmanImpactEffect;
     public int shooting = 0;
+    public int damage = 10;
 
     public void Seek (Transform _target)
     {
@@ -209,11 +210,23 @@ public class BowmanProjectile : MonoBehaviour
 
         if ( dir.magnitude <= distanceThisFrame ) {
             HitTarget();
+            Damage(target);
             return;
         }
 
         transform.Translate(dir.normalized * distanceThisFrame, Space.World);
         transform.Rotate(0, 10, 0);
+
+    }
+
+    void Damage (Transform enemy)
+    {
+        DummyEnemy e = enemy.GetComponent<DummyEnemy>();
+
+        if ( e != null )
+        {
+            e.TakeDamage(damage);
+        }
 
     }
 

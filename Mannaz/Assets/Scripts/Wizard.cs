@@ -6,7 +6,6 @@ public class Wizard : MonoBehaviour
 
     public int health = 30;
     public float speed = 4f;
-    public int damage = 10;
     public float attackRate = 0.8f;
     public float attackRange = 10.5f;
     public float spawnRate = 6f;
@@ -18,6 +17,7 @@ public class Wizard : MonoBehaviour
     Quaternion initialRot;
 
     public WizardProjectile fireball;
+    public GameObject deathEffect;
 
     void Start()
     {
@@ -55,6 +55,14 @@ public class Wizard : MonoBehaviour
 
     void Update()
     {
+
+        if (health <= 0)
+        {
+            GameObject effect = (GameObject)Instantiate(deathEffect, transform.position, Quaternion.identity);
+            Destroy(effect, 3.5f);
+            Destroy(gameObject);
+            return;
+        }
 
         if (target == null)
         {
