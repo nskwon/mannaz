@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2802529464091297900}
   - component: {fileID: 2802529463203817825}
   m_Layer: 0
-  m_Name: Guard 1
+  m_Name: Guard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -118,4 +118,6 @@ MonoBehaviour:
   attacking: 1
   enemyTag: Enemy
   GuardImpactEffect: {fileID: 4595123734002842890, guid: d6e294a36688cea4186bff4aa13eb9ca,
+    type: 3}
+  deathEffect: {fileID: 5006263877785467812, guid: 4a778ad8564c2b54098ec2628b78c5cd,
     type: 3}

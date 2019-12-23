@@ -6,21 +6,22 @@ public class Guards : MonoBehaviour
 
     public int health = 100;
     public float speed = 4f;
-    public int damage = 0/*15*/;
+    public int damage = 15;
     public float attackRate = 1f;
     public float attackRange = 5.5f;
     public float spawnRate = 4f;
-    public int attackDelay = 0;
     public int pullback = 0;
     public int forward = 0;
-    public int backward = 0;
+    public int backward = 1;
     public bool attacking = false;
 
     private Transform target;
     public string enemyTag = "Enemy";
+    Quaternion attackRot;
     Quaternion initialRot;
     Vector3 initialPos;
     public GameObject GuardImpactEffect;
+    public GameObject deathEffect;
 
     void Start()
     {
@@ -58,7 +59,7 @@ public class Guards : MonoBehaviour
             }
         } else
         {
-            if (nearestEnemy != null && shortestDistance <= attackRange+0.5f)
+            if (nearestEnemy != null && shortestDistance <= attackRange+0.75f)
             {
                 target = nearestEnemy.transform;
             }
@@ -75,36 +76,14 @@ public class Guards : MonoBehaviour
 
         if (health <= 0)
         {
+            GameObject effect = (GameObject)Instantiate(deathEffect, transform.position, Quaternion.identity);
+            Destroy(effect, 3.5f);
             Destroy(gameObject);
             return;
         }
 
-        if (target == null)
+        if ( target != null )
         {
-
-            if (pullback >= 10 && forward > 6 && (pullback != 0 && forward != 0 && backward != 0))
-            {
-                if (backward < 35)
-                {
-                    transform.position = Vector3.MoveTowards(transform.position, initialPos, Time.deltaTime * 11);
-                    backward++;
-                }
-                else
-                {
-                    pullback = 0;
-                    forward = 0;
-                    backward = 0;
-                }
-            }
-            else
-            {
-                attacking = false;
-                return;
-            }
-        }
-        else
-        {
-
             if (transform.position != target.position)
             {
                 Vector3 dir = target.position - transform.position;
@@ -112,47 +91,7 @@ public class Guards : MonoBehaviour
                 Vector3 rotation = lookRotation.eulerAngles;
                 transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
             }
-
-            if (pullback == 0 || !attacking)
-            {
-                initialPos = transform.position;
-            }
-
-            // attacking "animation"
-            if (pullback < 10)
-            {
-                transform.position -= transform.forward * Time.deltaTime;
-                pullback++;
-            }
-            else if (forward < 6)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * 25);
-                forward++;
-                if (transform.position == target.position)
-                {
-                    forward = 6;
-                }
-            }
-            else if (forward == 6)
-            {
-                HitTarget();
-                Damage(target);
-                forward++;
-                backward = 1;
-            }
-            else if (backward < 35)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, initialPos, Time.deltaTime * 11);
-                backward++;
-            }
-            else
-            {
-                pullback = 0;
-                forward = 0;
-                backward = 0;
-            }
         }
-
     }
 
     IEnumerator CoUpdate()
@@ -162,23 +101,81 @@ public class Guards : MonoBehaviour
 
             if (target == null)
             {
-                yield return null;
+
+                if (pullback >= 16 && forward > 10 && (pullback != 0 && forward != 0 && backward != 0))
+                {
+                    if (backward < 35)
+                    {
+                        transform.position = Vector3.MoveTowards(transform.position, initialPos, Time.deltaTime * 11);
+                        backward++;
+                        transform.rotation = attackRot;
+                    }
+                    else
+                    {
+                        pullback = 0;
+                        forward = 0;
+                        backward = 0;
+                    }
+                }
+                else
+                {
+                    attacking = false;
+                    yield return null;
+                }
             }
             else
             {
                 attacking = true;
-            }
 
-            if (health <= 0)
-            {
-                Destroy(gameObject);
-                yield return null;
+                if (pullback == 0 || !attacking)
+                {
+                    initialPos = transform.position;
+                }
+
+                // attacking "animation"
+                if (pullback < 16)
+                {
+                    transform.position -= transform.forward * Time.deltaTime;
+                    pullback++;
+                }
+                else if (forward < 10)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * 28);
+                    forward++;
+                    if (transform.position == target.position)
+                    {
+                        forward = 10;
+                    }
+                    attackRot = transform.rotation;
+                }
+                else if (forward == 10)
+                {
+                    HitTarget();
+                    Damage(target);
+                    forward++;
+                    backward = 1;
+                }
+                else if (backward < 35)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, initialPos, Time.deltaTime * 11);
+                    backward++;
+                }
+                else
+                {
+                    pullback = 0;
+                    forward = 0;
+                    backward = 0;
+                    yield return new WaitForSeconds(1.0f);
+                }
             }
 
             // check to move forward
             if (!attacking)
             {
-                transform.rotation = initialRot;
+                if (backward == 0)
+                {
+                    transform.rotation = initialRot;
+                }
                 transform.position += transform.forward * Time.deltaTime * speed;
             }
 
