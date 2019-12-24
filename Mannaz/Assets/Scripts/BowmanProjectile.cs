@@ -221,13 +221,7 @@ public class BowmanProjectile : MonoBehaviour
 
     void Damage (Transform enemy)
     {
-        DummyEnemy e = enemy.GetComponent<DummyEnemy>();
-
-        if ( e != null )
-        {
-            e.TakeDamage(damage);
-        }
-
+        enemy.SendMessage("TakeDamage", damage);
     }
 
     void HitTarget()

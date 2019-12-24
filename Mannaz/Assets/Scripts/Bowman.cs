@@ -66,7 +66,10 @@ public class Bowman : MonoBehaviour
 
             if (nearestEnemy != null && shortestDistance <= attackRange)
             {
-                target = nearestEnemy.transform;
+                if (target == null)
+                {
+                    target = nearestEnemy.transform;
+                }
             }
             else
             {
@@ -152,6 +155,11 @@ public class Bowman : MonoBehaviour
 
         }
 
+    }
+
+    public void TakeDamage(int amount)
+    {
+        health -= amount;
     }
 
     void OnDrawGizmosSelected()

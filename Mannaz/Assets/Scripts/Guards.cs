@@ -57,13 +57,16 @@ public class Guards : MonoBehaviour
         float shortestDistance = Mathf.Infinity;
         GameObject nearestEnemy = null;
 
-        foreach (GameObject enemy in enemies)
+        if (enemies != null)
         {
-            float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
-            if (distanceToEnemy < shortestDistance)
+            foreach (GameObject enemy in enemies)
             {
-                shortestDistance = distanceToEnemy;
-                nearestEnemy = enemy;
+                float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+                if (distanceToEnemy < shortestDistance)
+                {
+                    shortestDistance = distanceToEnemy;
+                    nearestEnemy = enemy;
+                }
             }
         }
 
@@ -81,7 +84,10 @@ public class Guards : MonoBehaviour
         {
             if (nearestEnemy != null && shortestDistance <= attackRange+0.75f)
             {
-                target = nearestEnemy.transform;
+                if (target == null)
+                {
+                    target = nearestEnemy.transform;
+                }
             }
             else
             {
@@ -213,13 +219,12 @@ public class Guards : MonoBehaviour
 
     void Damage(Transform enemy)
     {
-        DummyEnemy e = enemy.GetComponent<DummyEnemy>();
+        enemy.SendMessage("TakeDamage", damage);
+    }
 
-        if (e != null)
-        {
-            e.TakeDamage(damage);
-        }
-
+    public void TakeDamage(int amount)
+    {
+        health -= amount;
     }
 
     void HitTarget()

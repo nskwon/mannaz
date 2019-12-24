@@ -53,19 +53,25 @@ public class Wizard : MonoBehaviour
         float shortestDistance = Mathf.Infinity;
         GameObject nearestEnemy = null;
 
-        foreach (GameObject enemy in enemies)
+        if (enemies != null)
         {
-            float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
-            if (distanceToEnemy < shortestDistance)
+            foreach (GameObject enemy in enemies)
             {
-                shortestDistance = distanceToEnemy;
-                nearestEnemy = enemy;
+                float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+                if (distanceToEnemy < shortestDistance)
+                {
+                    shortestDistance = distanceToEnemy;
+                    nearestEnemy = enemy;
+                }
             }
         }
 
         if (nearestEnemy != null && shortestDistance <= attackRange)
         {
-            target = nearestEnemy.transform;
+            if (target == null)
+            {
+                target = nearestEnemy.transform;
+            }
         } else
         {
             target = null;
@@ -149,6 +155,11 @@ public class Wizard : MonoBehaviour
 
         }
 
+    }
+
+    public void TakeDamage(int amount)
+    {
+        health -= amount;
     }
 
     private void OnDrawGizmosSelected()
