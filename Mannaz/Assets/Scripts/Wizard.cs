@@ -13,7 +13,8 @@ public class Wizard : MonoBehaviour
     public bool attacking = false;
 
     private Transform target;
-    public string enemyTag = "Enemy";
+    public string myTag = "MyTroop";
+    public string mirrorTag = "MirrorTroop";
     Quaternion initialRot;
 
     public WizardProjectile fireball;
@@ -21,6 +22,11 @@ public class Wizard : MonoBehaviour
 
     void Start()
     {
+        if (gameObject.tag == "MirrorTroop")
+        {
+            transform.Rotate(180.0f, 0f, 0f, Space.World);
+        }
+
         initialRot = transform.rotation;
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
         StartCoroutine(CoUpdate());
@@ -29,23 +35,43 @@ public class Wizard : MonoBehaviour
     void UpdateTarget()
     {
 
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
+        GameObject[] enemies;
+
+        if (gameObject.tag == "MyTroop")
+        {
+            enemies = GameObject.FindGameObjectsWithTag(mirrorTag);
+        }
+        else if (gameObject.tag == "MirrorTroop")
+        {
+            enemies = GameObject.FindGameObjectsWithTag(myTag);
+        }
+        else
+        {
+            enemies = null;
+        }
+
         float shortestDistance = Mathf.Infinity;
         GameObject nearestEnemy = null;
 
-        foreach (GameObject enemy in enemies)
+        if (enemies != null)
         {
-            float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
-            if (distanceToEnemy < shortestDistance)
+            foreach (GameObject enemy in enemies)
             {
-                shortestDistance = distanceToEnemy;
-                nearestEnemy = enemy;
+                float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+                if (distanceToEnemy < shortestDistance)
+                {
+                    shortestDistance = distanceToEnemy;
+                    nearestEnemy = enemy;
+                }
             }
         }
 
         if (nearestEnemy != null && shortestDistance <= attackRange)
         {
-            target = nearestEnemy.transform;
+            if (target == null)
+            {
+                target = nearestEnemy.transform;
+            }
         } else
         {
             target = null;
@@ -129,6 +155,11 @@ public class Wizard : MonoBehaviour
 
         }
 
+    }
+
+    public void TakeDamage(int amount)
+    {
+        health -= amount;
     }
 
     private void OnDrawGizmosSelected()

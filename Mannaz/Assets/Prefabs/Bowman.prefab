@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4820906264500188768}
   m_Layer: 0
   m_Name: Bowman
-  m_TagString: Untagged
+  m_TagString: MyTroop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -112,7 +112,8 @@ MonoBehaviour:
   spawnRate: 6
   shooting: 0
   attacking: 0
-  enemyTag: Enemy
+  myTag: MyTroop
+  mirrorTag: MirrorTroop
   arrow: {fileID: 2976716219154395936, guid: bc30bf553cfc549428729aae820ec511, type: 3}
   deathEffect: {fileID: 7807524072623485832, guid: e75d0a3a85ae35d439ee0c40a99bfcab,
     type: 3}

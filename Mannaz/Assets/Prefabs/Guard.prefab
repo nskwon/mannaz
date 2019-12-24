@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2802529463203817825}
   m_Layer: 0
   m_Name: Guard
-  m_TagString: Untagged
+  m_TagString: MyTroop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111,7 +111,6 @@ MonoBehaviour:
   attackRate: 1
   attackRange: 5.5
   spawnRate: 4
-  attackDelay: 0
   pullback: 0
   forward: 0
   backward: 0

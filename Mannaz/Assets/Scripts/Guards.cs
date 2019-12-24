@@ -16,7 +16,8 @@ public class Guards : MonoBehaviour
     public bool attacking = false;
 
     private Transform target;
-    public string enemyTag = "Enemy";
+    public string myTag = "MyTroop";
+    public string mirrorTag = "MirrorTroop";
     Quaternion attackRot;
     Quaternion initialRot;
     Vector3 initialPos;
@@ -25,6 +26,11 @@ public class Guards : MonoBehaviour
 
     void Start()
     {
+        if (gameObject.tag == "MirrorTroop")
+        {
+            transform.Rotate(180.0f, 0f, 0f, Space.World);
+        }
+
         initialRot = transform.rotation;
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
         StartCoroutine(CoUpdate());
@@ -33,17 +39,34 @@ public class Guards : MonoBehaviour
     void UpdateTarget()
     {
 
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
+        GameObject[] enemies;
+
+        if (gameObject.tag == "MyTroop")
+        {
+            enemies = GameObject.FindGameObjectsWithTag(mirrorTag);
+        }
+        else if (gameObject.tag == "MirrorTroop")
+        {
+            enemies = GameObject.FindGameObjectsWithTag(myTag);
+        }
+        else
+        {
+            enemies = null;
+        }
+
         float shortestDistance = Mathf.Infinity;
         GameObject nearestEnemy = null;
 
-        foreach (GameObject enemy in enemies)
+        if (enemies != null)
         {
-            float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
-            if (distanceToEnemy < shortestDistance)
+            foreach (GameObject enemy in enemies)
             {
-                shortestDistance = distanceToEnemy;
-                nearestEnemy = enemy;
+                float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+                if (distanceToEnemy < shortestDistance)
+                {
+                    shortestDistance = distanceToEnemy;
+                    nearestEnemy = enemy;
+                }
             }
         }
 
@@ -61,7 +84,10 @@ public class Guards : MonoBehaviour
         {
             if (nearestEnemy != null && shortestDistance <= attackRange+0.75f)
             {
-                target = nearestEnemy.transform;
+                if (target == null)
+                {
+                    target = nearestEnemy.transform;
+                }
             }
             else
             {
@@ -193,13 +219,12 @@ public class Guards : MonoBehaviour
 
     void Damage(Transform enemy)
     {
-        DummyEnemy e = enemy.GetComponent<DummyEnemy>();
+        enemy.SendMessage("TakeDamage", damage);
+    }
 
-        if (e != null)
-        {
-            e.TakeDamage(damage);
-        }
-
+    public void TakeDamage(int amount)
+    {
+        health -= amount;
     }
 
     void HitTarget()
