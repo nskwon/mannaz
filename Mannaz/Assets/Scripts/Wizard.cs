@@ -13,7 +13,8 @@ public class Wizard : MonoBehaviour
     public bool attacking = false;
 
     private Transform target;
-    public string enemyTag = "Enemy";
+    public string myTag = "MyTroop";
+    public string mirrorTag = "MirrorTroop";
     Quaternion initialRot;
 
     public WizardProjectile fireball;
@@ -21,6 +22,11 @@ public class Wizard : MonoBehaviour
 
     void Start()
     {
+        if (gameObject.tag == "MirrorTroop")
+        {
+            transform.Rotate(180.0f, 0f, 0f, Space.World);
+        }
+
         initialRot = transform.rotation;
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
         StartCoroutine(CoUpdate());
@@ -29,7 +35,21 @@ public class Wizard : MonoBehaviour
     void UpdateTarget()
     {
 
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
+        GameObject[] enemies;
+
+        if (gameObject.tag == "MyTroop")
+        {
+            enemies = GameObject.FindGameObjectsWithTag(mirrorTag);
+        }
+        else if (gameObject.tag == "MirrorTroop")
+        {
+            enemies = GameObject.FindGameObjectsWithTag(myTag);
+        }
+        else
+        {
+            enemies = null;
+        }
+
         float shortestDistance = Mathf.Infinity;
         GameObject nearestEnemy = null;
 
