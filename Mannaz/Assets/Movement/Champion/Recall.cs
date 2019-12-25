@@ -5,8 +5,6 @@ using UnityEngine.AI;
 
 public class Recall : MonoBehaviour
 {
-    private NavMeshAgent doubleAgent;
-
     public Vector3 recallPos;
 
     public GameObject recallVFXPrefab;
@@ -19,8 +17,13 @@ public class Recall : MonoBehaviour
 
     public int recallCounter = 0;
 
+    public NavMeshAgent doubleAgent;
+
     void Start()
     {
+        GameObject theChamp = GameObject.Find("Champion");
+        ChampionController champController = theChamp.GetComponent<ChampionController>();
+        doubleAgent = champController.agent;
         animator = GetComponent<Animator>();
     }
 
@@ -56,7 +59,7 @@ public class Recall : MonoBehaviour
             counter += Time.deltaTime;
             yield return null; //Don't freeze Unity
         }
-        transform.position = recallPos;
+        doubleAgent.Warp(recallPos);
         animator.SetTrigger("EndRecall");
         Instantiate(endRecallVFXPrefab, transform.position, transform.rotation);
         recallCounter--;

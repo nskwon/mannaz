@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ChampionController : MonoBehaviour
+public class Champion : MonoBehaviour
 {
     public Camera mainCamera;
     public NavMeshAgent agent;
@@ -12,9 +12,18 @@ public class ChampionController : MonoBehaviour
     private Transform cachedTransform;
     private Vector3 cachedPosition;
     public int recallCounter = 0;
+   
+    public GameObject recallVFXPrefab;
+
+    public GameObject endRecallVFXPrefab;
+
+    public GameObject idleVFXPrefab;
+
+    Animator animator;
 
     void Start()
     {
+        animator = GetComponent<Animator>();
         cachedTransform = GetComponent<Transform>();
         if (track)
         {
@@ -25,7 +34,7 @@ public class ChampionController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {   
+    {
 
         if (track && cachedPosition != track.position)
         {
@@ -37,6 +46,7 @@ public class ChampionController : MonoBehaviour
         {
             agent.SetDestination(cachedPosition);
             recallCounter++;
+            StartCoroutine(recallCoroutine());
             StartCoroutine(homeCoroutine());
         }
 
@@ -72,7 +82,36 @@ public class ChampionController : MonoBehaviour
             yield return null; //Don't freeze Unity
         }
         recallCounter--;
-        agent.ResetPath();
+        agent.SetDestination(recallPosition);
+    }
+
+    IEnumerator recallCoroutine()
+    {
+        const float waitTime = 8f;
+        float counter = 0f;
+
+        GameObject recallEffect = Instantiate(recallVFXPrefab, transform.position, transform.rotation);
+        animator.SetTrigger("Recall");
+
+
+        while (counter < waitTime)
+        {
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                Destroy(recallEffect.gameObject);
+                recallCounter--;
+                yield break;
+            }
+
+            counter += Time.deltaTime;
+            yield return null; //Don't freeze Unity
+        }
+        transform.position = recallPosition;
+        animator.SetTrigger("EndRecall");
+        Instantiate(endRecallVFXPrefab, transform.position, transform.rotation);
+        recallCounter--;
+
     }
 
 }
