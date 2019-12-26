@@ -7,6 +7,7 @@ public class Node : MonoBehaviour
     //private GameObject building;
     private Renderer rend;
     private Color startColor;
+    private Vector3 shiftUp;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +19,8 @@ public class Node : MonoBehaviour
     void OnMouseDown()
     {
         GameObject turretToBuild = BuildManager.instance.GetBuildingToBuild();
-        GameObject turret = (GameObject)Instantiate(turretToBuild, transform.position, transform.rotation);
+        shiftUp = new Vector3(transform.localPosition.x, transform.localPosition.y + 2, transform.localPosition.z);
+        GameObject turret = (GameObject)Instantiate(turretToBuild, shiftUp, transform.rotation);
     }
     // Update is called once per frame
     void OnMouseEnter()
