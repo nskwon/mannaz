@@ -82,6 +82,12 @@ public class Guards : MonoBehaviour
             }
         } else
         {
+
+            if (target != null && Vector3.Distance(transform.position, target.position) > attackRange)
+            {
+                target = null;
+            }
+
             if (nearestEnemy != null && shortestDistance <= attackRange+0.75f)
             {
                 if (target == null)

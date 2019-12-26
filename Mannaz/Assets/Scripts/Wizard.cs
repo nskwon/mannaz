@@ -66,6 +66,11 @@ public class Wizard : MonoBehaviour
             }
         }
 
+        if (target != null && Vector3.Distance(transform.position, target.position) > attackRange)
+        {
+            target = null;
+        }
+
         if (nearestEnemy != null && shortestDistance <= attackRange)
         {
             if (target == null)
