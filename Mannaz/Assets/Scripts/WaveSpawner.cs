@@ -34,15 +34,15 @@ public class WaveSpawner : MonoBehaviour
     }
     void SpawnEnemy()
     {
-        if (transform.name == "Guard Tower")
+        if (transform.tag == "MyGuardTower")
         {
             Guards testEnemy = Instantiate(enemyGuard, SpawnLoc.position, SpawnLoc.rotation);
         }
-        else if (transform.name == "Bowman Tower")
+        else if (transform.tag == "MyBowmanTower")
         {
             Bowman testEnemy = Instantiate(enemyBowman, SpawnLoc.position, SpawnLoc.rotation);
         }
-        else if (transform.name == "Wizard Tower")
+        else if (transform.tag == "MyWizardTower")
         {
             Wizard testEnemy = Instantiate(enemyWizard, SpawnLoc.position, SpawnLoc.rotation);
         }
