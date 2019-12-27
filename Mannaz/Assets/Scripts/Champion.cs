@@ -19,6 +19,12 @@ public class Champion : MonoBehaviour
 
     public GameObject idleVFXPrefab;
 
+    public int health = 500;
+    public float attackRate = 1.5f;
+    public float attackRange = 16.0f;
+    public int shooting = 0;
+    public bool attacking = false;
+
     Animator animator;
 
     void Start()
