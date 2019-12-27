@@ -113,7 +113,8 @@ MonoBehaviour:
   spawnRate: 6
   shooting: 0
   attacking: 0
-  enemyTag: Enemy
+  myTag: MyTroop
+  mirrorTag: MirrorTroop
   fireball: {fileID: 1980226565224531992, guid: 4aa57167b70a0354eb7b474b164e9291,
     type: 3}
   deathEffect: {fileID: 7390607449208850571, guid: 20c0f92186eb23343b9f247dcef80dad,

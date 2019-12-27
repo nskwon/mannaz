@@ -107,10 +107,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 446c6998e1c75b044a844f001274d96e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPreFab: {fileID: 7787751896010284206, guid: 32be7a7964d0f234bb22bdae799936c6,
+  enemyGuard: {fileID: 2802529463203817825, guid: fefecddeb1dbf274fb4887d70eb12501,
+    type: 3}
+  enemyWizard: {fileID: 3264313304583339705, guid: 046355f3df9a7854d80158fdc9f9b360,
+    type: 3}
+  enemyBowman: {fileID: 4820906264500188768, guid: bf45c22c3fb12bd498974be59c9f196d,
     type: 3}
   SpawnLoc: {fileID: 3548121286158304004}
-  numberOfEnemies: 3
   timeBetweenWaves: 2
 --- !u!1 &3548121286158304027
 GameObject:

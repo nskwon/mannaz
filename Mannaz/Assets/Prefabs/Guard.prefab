@@ -115,7 +115,8 @@ MonoBehaviour:
   forward: 0
   backward: 0
   attacking: 1
-  enemyTag: Enemy
+  myTag: MyTroop
+  mirrorTag: MirrorTroop
   GuardImpactEffect: {fileID: 4595123734002842890, guid: d6e294a36688cea4186bff4aa13eb9ca,
     type: 3}
   deathEffect: {fileID: 5006263877785467812, guid: 4a778ad8564c2b54098ec2628b78c5cd,

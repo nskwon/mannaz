@@ -3,15 +3,15 @@ using System.Collections;
 
 public class WaveSpawner : MonoBehaviour
 {
-    public Enemy enemyPreFab;
+    public Guards enemyGuard;
+    public Wizard enemyWizard;
+    public Bowman enemyBowman;
 
     public Transform SpawnLoc;
 
-    public int numberOfEnemies = 3; 
+    private int numberOfEnemies = 1; 
 
     public float timeBetweenWaves = 2f;
-
-    private float countdown = 3f;
 
     void Start()
     {
@@ -29,12 +29,23 @@ public class WaveSpawner : MonoBehaviour
         for (int i = 0; i < numberOfEnemies; i++)
         {
             SpawnEnemy();
-            yield return new WaitForSeconds(.3f);
+            yield return new WaitForSeconds(1f);
         }
     }
     void SpawnEnemy()
     {
-        Enemy testEnemy = Instantiate(enemyPreFab, SpawnLoc.position, SpawnLoc.rotation);
+        if (transform.name == "Guard Tower")
+        {
+            Guards testEnemy = Instantiate(enemyGuard, SpawnLoc.position, SpawnLoc.rotation);
+        }
+        else if (transform.name == "Bowman Tower")
+        {
+            Bowman testEnemy = Instantiate(enemyBowman, SpawnLoc.position, SpawnLoc.rotation);
+        }
+        else if (transform.name == "Wizard Tower")
+        {
+            Wizard testEnemy = Instantiate(enemyWizard, SpawnLoc.position, SpawnLoc.rotation);
+        }
     }
 
     void SpawnTroops()

@@ -83,12 +83,12 @@ public class Guards : MonoBehaviour
         } else
         {
 
-            if (target != null && Vector3.Distance(transform.position, target.position) > attackRange)
+            if (target != null && Vector3.Distance(transform.position, target.position) > attackRange - 2f)
             {
                 target = null;
             }
 
-            if (nearestEnemy != null && shortestDistance <= attackRange+0.75f)
+            if (nearestEnemy != null && shortestDistance <= attackRange + 2f)
             {
                 if (target == null)
                 {

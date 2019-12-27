@@ -112,6 +112,7 @@ MonoBehaviour:
   spawnRate: 6
   shooting: 0
   attacking: 0
+  target: {fileID: 0}
   myTag: MyTroop
   mirrorTag: MirrorTroop
   arrow: {fileID: 2976716219154395936, guid: bc30bf553cfc549428729aae820ec511, type: 3}
