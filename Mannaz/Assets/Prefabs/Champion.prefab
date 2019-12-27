@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc96df9bec21220448b1fad9e7a0c691, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 4188148781630932641, guid: 75b274e2a98b1a84895ef1a5faaec02f,
+  mainCamera: {fileID: 1075923608926743326, guid: 75b274e2a98b1a84895ef1a5faaec02f,
     type: 3}
   agent: {fileID: 6052061611467386253}
   track: {fileID: 6052061611467386249}

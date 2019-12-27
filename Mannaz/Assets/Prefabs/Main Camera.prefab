@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4188148781630932643
+--- !u!1 &1075923608926743312
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4188148781630932646}
-  - component: {fileID: 4188148781630932641}
-  - component: {fileID: 4188148781630932640}
+  - component: {fileID: 1075923608926743327}
+  - component: {fileID: 1075923608926743326}
+  - component: {fileID: 1075923608926743313}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -18,27 +18,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4188148781630932646
+--- !u!4 &1075923608926743327
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4188148781630932643}
-  m_LocalRotation: {x: 0.6460842, y: -0.14040355, z: 0.10525161, w: 0.7428217}
-  m_LocalPosition: {x: 37.5, y: 43.7, z: 12.7}
+  m_GameObject: {fileID: 1075923608926743312}
+  m_LocalRotation: {x: 0.65454775, y: -0.009278816, z: -0.008540344, w: 0.7559155}
+  m_LocalPosition: {x: 37.5, y: 90, z: 12.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 81.65301, y: -30.000002, z: -9.940001}
---- !u!20 &4188148781630932641
+  m_LocalEulerAnglesHint: {x: 81.65301, y: -10, z: -9.940001}
+--- !u!20 &1075923608926743326
 Camera:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4188148781630932643}
+  m_GameObject: {fileID: 1075923608926743312}
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
@@ -75,11 +75,11 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &4188148781630932640
+--- !u!81 &1075923608926743313
 AudioListener:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4188148781630932643}
+  m_GameObject: {fileID: 1075923608926743312}
   m_Enabled: 1
