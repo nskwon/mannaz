@@ -114,4 +114,9 @@ public class Champion : MonoBehaviour
 
     }
 
+    public void TakeDamage(int amount)
+    {
+        //health -= amount;
+    }
+
 }
