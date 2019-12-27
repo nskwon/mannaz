@@ -107,7 +107,7 @@ public class Champion : MonoBehaviour
             counter += Time.deltaTime;
             yield return null; //Don't freeze Unity
         }
-        transform.position = recallPosition;
+        agent.Warp(recallPosition);
         animator.SetTrigger("EndRecall");
         Instantiate(endRecallVFXPrefab, transform.position, transform.rotation);
         recallCounter--;
