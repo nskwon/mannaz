@@ -11,6 +11,8 @@ public class WizardProjectile : MonoBehaviour
     public int rightShift = 0;
     private Transform target;
     public GameObject WizardImpactEffect;
+    public int damage = 5;
+
 
     public void Seek(Transform _target)
     {
@@ -37,6 +39,7 @@ public class WizardProjectile : MonoBehaviour
         if (dir.magnitude <= distanceThisFrame)
         {
             HitTarget();
+            Damage(target);
             return;
         }
 
@@ -61,6 +64,11 @@ public class WizardProjectile : MonoBehaviour
         }
 
     }
+
+    void Damage(Transform enemy)
+    {
+        enemy.SendMessage("TakeDamage", damage);
+     }
 
     void HitTarget()
     {

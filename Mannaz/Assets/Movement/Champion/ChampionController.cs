@@ -75,4 +75,9 @@ public class ChampionController : MonoBehaviour
         agent.ResetPath();
     }
 
+    public void TakeDamage(int amount)
+    {
+        //health -= amount;
+    }
+
 }

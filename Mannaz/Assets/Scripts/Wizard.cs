@@ -6,7 +6,6 @@ public class Wizard : MonoBehaviour
 
     public int health = 30;
     public float speed = 4f;
-    public int damage = 10;
     public float attackRate = 0.8f;
     public float attackRange = 10.5f;
     public float spawnRate = 6f;
@@ -14,13 +13,20 @@ public class Wizard : MonoBehaviour
     public bool attacking = false;
 
     private Transform target;
-    public string enemyTag = "Enemy";
+    public string myTag = "MyTroop";
+    public string mirrorTag = "MirrorTroop";
     Quaternion initialRot;
 
     public WizardProjectile fireball;
+    public GameObject deathEffect;
 
     void Start()
     {
+        if (gameObject.tag == "MirrorTroop")
+        {
+            transform.Rotate(180.0f, 0f, 0f, Space.World);
+        }
+
         initialRot = transform.rotation;
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
         StartCoroutine(CoUpdate());
@@ -29,23 +35,48 @@ public class Wizard : MonoBehaviour
     void UpdateTarget()
     {
 
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
+        GameObject[] enemies;
+
+        if (gameObject.tag == "MyTroop")
+        {
+            enemies = GameObject.FindGameObjectsWithTag(mirrorTag);
+        }
+        else if (gameObject.tag == "MirrorTroop")
+        {
+            enemies = GameObject.FindGameObjectsWithTag(myTag);
+        }
+        else
+        {
+            enemies = null;
+        }
+
         float shortestDistance = Mathf.Infinity;
         GameObject nearestEnemy = null;
 
-        foreach (GameObject enemy in enemies)
+        if (enemies != null)
         {
-            float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
-            if (distanceToEnemy < shortestDistance)
+            foreach (GameObject enemy in enemies)
             {
-                shortestDistance = distanceToEnemy;
-                nearestEnemy = enemy;
+                float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+                if (distanceToEnemy < shortestDistance)
+                {
+                    shortestDistance = distanceToEnemy;
+                    nearestEnemy = enemy;
+                }
             }
+        }
+
+        if (target != null && Vector3.Distance(transform.position, target.position) > attackRange)
+        {
+            target = null;
         }
 
         if (nearestEnemy != null && shortestDistance <= attackRange)
         {
-            target = nearestEnemy.transform;
+            if (target == null)
+            {
+                target = nearestEnemy.transform;
+            }
         } else
         {
             target = null;
@@ -55,6 +86,14 @@ public class Wizard : MonoBehaviour
 
     void Update()
     {
+
+        if (health <= 0)
+        {
+            GameObject effect = (GameObject)Instantiate(deathEffect, transform.position, Quaternion.identity);
+            Destroy(effect, 3.5f);
+            Destroy(gameObject);
+            return;
+        }
 
         if (target == null)
         {
@@ -121,6 +160,11 @@ public class Wizard : MonoBehaviour
 
         }
 
+    }
+
+    public void TakeDamage(int amount)
+    {
+        health -= amount;
     }
 
     private void OnDrawGizmosSelected()
