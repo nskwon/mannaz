@@ -47,7 +47,6 @@ public class Champion : MonoBehaviour
             agent.SetDestination(cachedPosition);
             recallCounter++;
             StartCoroutine(recallCoroutine());
-            StartCoroutine(homeCoroutine());
         }
 
         if (Input.GetMouseButtonDown(1))
@@ -61,28 +60,6 @@ public class Champion : MonoBehaviour
             }
         }
 
-    }
-
-    IEnumerator homeCoroutine()
-    {
-
-        const float waitTime = 8f;
-        float counter = 0f;
-
-        while (counter < waitTime)
-        {
-
-            if (Input.GetMouseButtonDown(1))
-            {
-                recallCounter--;
-                yield break;
-            }
-
-            counter += Time.deltaTime;
-            yield return null; //Don't freeze Unity
-        }
-        recallCounter--;
-        agent.SetDestination(recallPosition);
     }
 
     IEnumerator recallCoroutine()
@@ -110,6 +87,7 @@ public class Champion : MonoBehaviour
         agent.Warp(recallPosition);
         animator.SetTrigger("EndRecall");
         Instantiate(endRecallVFXPrefab, transform.position, transform.rotation);
+        agent.SetDestination(recallPosition);
         recallCounter--;
 
     }
